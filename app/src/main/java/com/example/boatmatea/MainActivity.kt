@@ -4,13 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.boatmatea.ui.navigation.AppBottomBarMaterial3
+import com.example.boatmatea.ui.navigation.NavigationGraph
 import com.example.boatmatea.ui.theme.BoatMateATheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +23,23 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BoatMateATheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MainScreen()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun MainScreen() {
+    val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BoatMateATheme {
-        Greeting("Android")
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.safeDrawing),
+        // ☝️ This remains System UI bars.
+        bottomBar = { AppBottomBarMaterial3(navController) }
+    ) { innerPadding ->
+        NavigationGraph(modifier = Modifier.padding(innerPadding), navController = navController)
     }
 }
