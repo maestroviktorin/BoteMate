@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @Database(
     entities = [LogEntry::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class LogEntryDatabase : RoomDatabase() {
     abstract fun dao(): LogEntryDao
 
@@ -59,7 +62,7 @@ abstract class LogEntryDatabase : RoomDatabase() {
         suspend fun populateDatabase(logEntryDao: LogEntryDao) {
             // Add sample Log Entries.
             val logEntry = LogEntry(
-                date = "someDate",
+                date = LocalDate.now(),
                 logEntryType = LogEntryType.REPAIR,
                 deviceType = DeviceType.ANCHOR,
             )

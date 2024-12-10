@@ -5,15 +5,14 @@ package com.example.boatmatea.ui.navigation
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -22,15 +21,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.boatmatea.ui.home.HomeScreen
-import com.example.boatmatea.ui.log.LogbookScreen
+import com.example.boatmatea.ui.log.LogBookScreen
 import com.example.boatmatea.ui.theme.BoatMateATheme
+import com.example.boatmatea.ui.theme.LightColorScheme
 
 @Composable
 fun AppBottomBarMaterial3(navController: NavHostController) {
     BottomAppBar(
         modifier = Modifier
             .height(48.dp),
-        containerColor = Color(0xFF9C6AD6),
+        containerColor = LightColorScheme.tertiary,
         actions = {
             IconButton(modifier = Modifier.weight(0.33F),
                 onClick = {
@@ -40,15 +40,15 @@ fun AppBottomBarMaterial3(navController: NavHostController) {
             }
             IconButton(modifier = Modifier.weight(0.33F),
                 onClick = {
-                    navController.navigate(NavDestination.Learn(foo = 282))
+                    navController.navigate(NavDestination.LogBook(foo = 282))
                 }) {
-                Icon(imageVector = Icons.Filled.Info, contentDescription = "Learn")
+                Icon(imageVector = Icons.Filled.Build, contentDescription = "Learn")
             }
             IconButton(modifier = Modifier.weight(0.33F),
                 onClick = {
-                    navController.navigate(NavDestination.Profile(id = "FromBottomBar"))
+                    navController.navigate(NavDestination.Learn(id = "FromBottomBar"))
                 }) {
-                Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = null)
+                Icon(imageVector = Icons.Outlined.Star, contentDescription = null)
             }
         })
 }
@@ -64,19 +64,17 @@ fun NavigationGraph(modifier: Modifier = Modifier, navController: NavHostControl
                     modifier = modifier,
                 )
             }
-            composable<NavDestination.Learn> { backStackEntry ->
-                val learn: NavDestination.Learn = backStackEntry.toRoute()
-                LogbookScreen(
-                    modifier = modifier,
-                )
+            composable<NavDestination.LogBook> { backStackEntry ->
+                val learn: NavDestination.LogBook = backStackEntry.toRoute()
+                LogBookScreen()
 //                LearnScreen(
 //                    modifier = modifier,
 //                    navController = navController,
 //                    foo = learn.foo
 //                )
             }
-            composable<NavDestination.Profile> { backStackEntry ->
-                val profile: NavDestination.Profile = backStackEntry.toRoute()
+            composable<NavDestination.Learn> { backStackEntry ->
+                val profile: NavDestination.Learn = backStackEntry.toRoute()
                 HomeScreen(
                     modifier = modifier,
                 )

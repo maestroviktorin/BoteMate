@@ -8,8 +8,8 @@ sealed class NavDestination {
     data class Home(val name: String) : NavDestination()
 
     @Serializable
-    data class Learn(val foo: Int) : NavDestination()
+    data class LogBook(val foo: Int) : NavDestination()
 
     @Serializable
-    data class Profile(val id: String) : NavDestination()
+    data class Learn(val id: String) : NavDestination()
 }

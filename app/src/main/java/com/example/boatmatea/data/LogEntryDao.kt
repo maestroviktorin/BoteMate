@@ -1,6 +1,7 @@
 package com.example.boatmatea.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -17,6 +18,9 @@ interface LogEntryDao {
 
     @Query("SELECT * FROM logbook")
     fun getAll(): Flow<List<LogEntry>>
+
+    @Delete
+    suspend fun deleteLogEntry(logEntry: LogEntry)
 
     @Query("DELETE FROM logbook")
     suspend fun deleteAll()
